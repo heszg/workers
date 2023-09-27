@@ -1,7 +1,6 @@
 package com.talhanation.workers.network;
 
 import com.talhanation.workers.entities.MerchantEntity;
-import com.talhanation.workers.entities.MinerEntity;
 import de.maxhenkel.corelib.net.Message;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,7 +28,7 @@ public class MessageMerchantReturnTime implements Message<MessageMerchantReturnT
     }
 
     public void executeServerSide(NetworkEvent.Context context){
-        List<MerchantEntity> list = Objects.requireNonNull(context.getSender()).level.getEntitiesOfClass(MerchantEntity.class, context.getSender().getBoundingBox().inflate(16.0D));
+        List<MerchantEntity> list = Objects.requireNonNull(context.getSender()).getCommandSenderWorld().getEntitiesOfClass(MerchantEntity.class, context.getSender().getBoundingBox().inflate(16.0D));
         for (MerchantEntity merchant : list){
 
             if (merchant.getUUID().equals(this.uuid))

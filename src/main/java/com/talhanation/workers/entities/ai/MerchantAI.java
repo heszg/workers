@@ -134,6 +134,10 @@ public class MerchantAI extends Goal {
                 else
                     this.setWorkState(IDLE);
             }
+
+            case PAUSING -> {
+                // TODO pause
+            }
         }
     }
 
@@ -193,7 +197,7 @@ public class MerchantAI extends Goal {
         this.changeTravelType();
     }
     private void searchForBoat() {
-        List<Boat> list = merchant.level.getEntitiesOfClass(Boat.class, merchant.getBoundingBox().inflate(16D));
+        List<Boat> list = merchant.getCommandSenderWorld().getEntitiesOfClass(Boat.class, merchant.getBoundingBox().inflate(16D));
         //list.removeIf(boat -> !boat.getPassengers().isEmpty());
         list.sort(Comparator.comparing(boatInList -> boatInList.distanceTo(merchant)));
         boolean getClosest = false;

@@ -1,6 +1,5 @@
 package com.talhanation.workers.inventory;
 
-import com.talhanation.workers.Main;
 import com.talhanation.workers.entities.AbstractWorkerEntity;
 import com.talhanation.workers.init.ModMenuTypes;
 import de.maxhenkel.corelib.inventory.ContainerBase;
@@ -13,8 +12,8 @@ public class MerchantWaypointContainer extends ContainerBase {
 
     public MerchantWaypointContainer(int id, Player playerEntity, AbstractWorkerEntity recruit, Inventory playerInventory) {
         super(ModMenuTypes.WAYPOINT_CONTAINER_TYPE.get(), id, null, new SimpleContainer(0));
-        String playerName = playerEntity.getDisplayName().getString();
-        String workerName = recruit.getDisplayName().getString();
+        //String playerName = playerEntity.getDisplayName().getString();
+        //String workerName = recruit.getDisplayName().getString();
         this.worker = recruit;
         this.playerInventory = playerInventory;
     }

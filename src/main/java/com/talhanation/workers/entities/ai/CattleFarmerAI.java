@@ -5,7 +5,6 @@ import com.talhanation.workers.entities.CattleFarmerEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -156,7 +155,7 @@ public class CattleFarmerAI extends AnimalFarmerAI {
     }
 
     private Optional<Cow> findCowMilking() {
-        return  animalFarmer.level.getEntitiesOfClass(Cow.class, animalFarmer.getBoundingBox()
+        return  animalFarmer.getCommandSenderWorld().getEntitiesOfClass(Cow.class, animalFarmer.getBoundingBox()
                 .inflate(8D), Cow::isAlive)
                 .stream()
                 .filter(not(Cow::isBaby))
@@ -165,7 +164,7 @@ public class CattleFarmerAI extends AnimalFarmerAI {
     }
 
     private List<Cow> findCowSlaughtering() {
-        return  animalFarmer.level.getEntitiesOfClass(Cow.class, animalFarmer.getBoundingBox()
+        return  animalFarmer.getCommandSenderWorld().getEntitiesOfClass(Cow.class, animalFarmer.getBoundingBox()
                         .inflate(8D), Cow::isAlive)
                 .stream()
                 .filter(not(Cow::isBaby))

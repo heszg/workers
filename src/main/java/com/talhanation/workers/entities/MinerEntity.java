@@ -98,6 +98,17 @@ public class MinerEntity extends AbstractWorkerEntity {
                 .add(Attributes.ATTACK_DAMAGE, 1.0D).add(Attributes.FOLLOW_RANGE, 32.0D);
     }
 
+    /*
+    @Override
+    public boolean needsToDeposit(){
+        return (this.needsTool() || this.getFarmedItems() >= 16) 
+                && getChestPos() != null
+                && !this.getFollow() 
+                && !this.needsChest() 
+                && !this.needsToSleep(); //TODO: configurable amount
+    }
+    */
+    
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new FloatGoal(this));

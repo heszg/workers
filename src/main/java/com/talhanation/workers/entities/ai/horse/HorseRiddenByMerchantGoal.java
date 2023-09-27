@@ -1,6 +1,7 @@
 package com.talhanation.workers.entities.ai.horse;
 
 import com.talhanation.workers.entities.MerchantEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -30,16 +31,22 @@ public class HorseRiddenByMerchantGoal extends Goal {
 
 
     private void applyHorseSpeed(double merchantSpeed){
+        AttributeInstance speedA = this.horse.getAttribute(Attributes.MOVEMENT_SPEED);
+        if ( speedA == null )
+        {
+            return;
+        }
         double speed;
-
-        if (this.horse.getPersistentData().contains("oldSpeed")) {
+        if(this.horse.getPersistentData().contains("oldSpeed"))
+        {
             speed = horse.getPersistentData().getDouble("oldSpeed");
-        } else {
-            speed = this.horse.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
+        }
+        else
+        {
+            speed = speedA.getValue();
             this.horse.getPersistentData().putDouble("oldSpeed", speed);
         }
-
-        this.horse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((0.225  + speed) * merchantSpeed);
+        speedA.setBaseValue((0.225  + speed) * merchantSpeed);
         speedApplied = true;
     }
 
@@ -50,8 +57,8 @@ public class HorseRiddenByMerchantGoal extends Goal {
             merchantSpeedState = merchant.getTravelSpeedState();
             double merchantSpeed;
             switch (merchantSpeedState){
-                default -> merchantSpeed = 0.9F;
-                case 0 -> merchantSpeed = 0.65F;
+                default -> merchantSpeed = 0.9F; 
+                case 0 -> merchantSpeed = 0.65F; 
                 case 2 -> merchantSpeed = 1.1F;
             }
             applyHorseSpeed(merchantSpeed);
@@ -61,7 +68,11 @@ public class HorseRiddenByMerchantGoal extends Goal {
     @Override
     public void stop() {
         super.stop();
-        double oldSpeed = horse.getPersistentData().getDouble("oldSpeed");
-        this.horse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(oldSpeed);
+        AttributeInstance speedA = this.horse.getAttribute(Attributes.MOVEMENT_SPEED);
+        if ( speedA != null )
+        {
+            double oldSpeed = horse.getPersistentData().getDouble("oldSpeed");
+            speedA.setBaseValue(oldSpeed);
+        }
     }
 }

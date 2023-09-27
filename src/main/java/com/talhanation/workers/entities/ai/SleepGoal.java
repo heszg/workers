@@ -9,10 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.jetbrains.annotations.Nullable;
 
 public class SleepGoal extends Goal {
     private final AbstractWorkerEntity worker;
@@ -65,8 +62,8 @@ public class SleepGoal extends Goal {
             return;
         }
 
-        BlockEntity bedEntity = worker.level.getBlockEntity(sleepPos);
-        if (bedEntity == null || !bedEntity.getBlockState().isBed(worker.level, sleepPos, worker)) {
+        BlockEntity bedEntity = worker.getCommandSenderWorld().getBlockEntity(sleepPos);
+        if (bedEntity == null || !bedEntity.getBlockState().isBed(worker.getCommandSenderWorld(), sleepPos, worker)) {
             worker.tellPlayer(owner, CANT_FIND_BED);
             worker.setNeedsBed(true);
             return;
@@ -120,9 +117,9 @@ public class SleepGoal extends Goal {
             for (int y = -range; y < range; y++) {
                 for (int z = -range; z < range; z++) {
                     bedPos = worker.getOnPos().offset(x, y, z);
-                    BlockState state = worker.level.getBlockState(bedPos);
+                    BlockState state = worker.getCommandSenderWorld().getBlockState(bedPos);
 
-                    if (state.isBed(worker.level, bedPos, this.worker) &&
+                    if (state.isBed(worker.getCommandSenderWorld(), bedPos, this.worker) &&
                         state.getValue(BlockStateProperties.BED_PART) == BedPart.HEAD &&
                         !state.getValue(BlockStateProperties.OCCUPIED)) {
                         return bedPos;

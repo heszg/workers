@@ -1,26 +1,27 @@
 package com.talhanation.workers.items;
+import com.talhanation.workers.entities.AbstractWorkerEntity;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 
 import java.util.function.Supplier;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public class WorkersSpawnEgg extends SpawnEggItem {
+public class WorkersSpawnEgg extends ForgeSpawnEggItem {
 
-    private Supplier<EntityType<?>> entityType;
+    private final Supplier<? extends EntityType<? extends AbstractWorkerEntity>> entityType;
+    // private Supplier<EntityType<?>> entityType;
 
-    @SuppressWarnings("deprecation")
-    public WorkersSpawnEgg(Supplier<EntityType<?>> entityType, int primaryColor, int secondaryColor,
+    public WorkersSpawnEgg(Supplier<? extends EntityType<? extends AbstractWorkerEntity>> entityType, int primaryColor, int secondaryColor,
             Properties properties) {
-        super(null, primaryColor, secondaryColor, properties);
+        super(entityType, primaryColor, secondaryColor, properties);
         this.entityType = entityType;
     }
 
     @Override
-    public EntityType<?> getType(@Nullable CompoundTag compound) {
+    public @NotNull EntityType<?> getType(CompoundTag compound) {
         if (compound != null && compound.contains("EntityTag", 10)) {
             CompoundTag entityTag = compound.getCompound("EntityTag");
 

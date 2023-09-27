@@ -107,16 +107,16 @@ public class SailorNavigator {
        BlockState state = this.level.getBlockState(pos);
 
        if(state.is(Blocks.WATER)){
-           BlockState stateNorth = this.worker.getLevel().getBlockState(pos.north());
-           BlockState stateEast = this.worker.getLevel().getBlockState(pos.east());
-           BlockState stateSouth = this.worker.getLevel().getBlockState(pos.south());
-           BlockState stateWest = this.worker.getLevel().getBlockState(pos.west());
+           BlockState stateNorth = this.worker.getCommandSenderWorld().getBlockState(pos.north());
+           BlockState stateEast = this.worker.getCommandSenderWorld().getBlockState(pos.east());
+           BlockState stateSouth = this.worker.getCommandSenderWorld().getBlockState(pos.south());
+           BlockState stateWest = this.worker.getCommandSenderWorld().getBlockState(pos.west());
 
            /*
-           BlockState stateNorthEast = this.mob.getLevel().getBlockState(pos.north().east());
-           BlockState stateNorthWest = this.mob.getLevel().getBlockState(pos.north().west());
-           BlockState stateSouthEast = this.mob.getLevel().getBlockState(pos.south().east());
-           BlockState stateSouthWest = this.mob.getLevel().getBlockState(pos.south().west());
+           BlockState stateNorthEast = this.mob.getCommandSenderWorld().getBlockState(pos.north().east());
+           BlockState stateNorthWest = this.mob.getCommandSenderWorld().getBlockState(pos.north().west());
+           BlockState stateSouthEast = this.mob.getCommandSenderWorld().getBlockState(pos.south().east());
+           BlockState stateSouthWest = this.mob.getCommandSenderWorld().getBlockState(pos.south().west());
 
            */
            return stateNorth.is(Blocks.WATER) && stateEast.is(Blocks.WATER) && stateSouth.is(Blocks.WATER) && stateWest.is(Blocks.WATER);

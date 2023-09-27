@@ -4,7 +4,6 @@ import com.talhanation.workers.Main;
 import com.talhanation.workers.entities.MerchantEntity;
 import de.maxhenkel.corelib.net.Message;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
@@ -33,7 +32,7 @@ public class MessageMerchantTradeLimitButton implements Message<MessageMerchantT
     }
 
     public void executeServerSide(NetworkEvent.Context context){
-        List<MerchantEntity> list = Objects.requireNonNull(context.getSender()).level.getEntitiesOfClass(MerchantEntity.class, context.getSender().getBoundingBox().inflate(16.0D));
+        List<MerchantEntity> list = Objects.requireNonNull(context.getSender()).getCommandSenderWorld().getEntitiesOfClass(MerchantEntity.class, context.getSender().getBoundingBox().inflate(16.0D));
         for (MerchantEntity merchant : list){
 
             if (merchant.getUUID().equals(this.uuid)) {

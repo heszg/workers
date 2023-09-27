@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
@@ -37,14 +37,15 @@ mixin{
 }
 
 version = '1.7.0'
+
 group = 'com.talhanation.workers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'workers-1.19.2'
+archivesBaseName = 'workers-1.20.1'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 //println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'official', version: '1.20.1'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
@@ -52,11 +53,11 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             //arg "-mixin.config=recruits.general.mixin.json"//////////////////////////
-            Random random = new Random();
-            args = ['--username', 'dev' ]//+ random.nextInt(1000)]
+
+            args = ['--username', 'talhanation' ]
 
             mods {
-                examplemod {
+                'workers' {
                     source sourceSets.main
                 }
             }
@@ -69,7 +70,7 @@ minecraft {
             //arg "-mixin.config=recruits.general.mixin.json"//////////////////////////
 
             mods {
-                examplemod {
+                'workers' {
                     source sourceSets.main
                 }
             }
@@ -79,9 +80,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'workers', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             mods {
-                examplemod {
+                'workers' {
                     source sourceSets.main
                 }
             }
@@ -111,11 +112,11 @@ sourceSets.main.resources {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.0'
-    shadow fg.deobf("de.maxhenkel.corelib:corelib:1.19.2-1.0.0:api")
-    runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:1.19.2-1.0.0")
-    runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:1.19.2-1.0.0:javadoc")
-    implementation fg.deobf("curse.maven:worldedit-225608:3922622")
+    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
+    shadow fg.deobf("de.maxhenkel.corelib:corelib:1.20.1-1.0.0:api")
+    runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:1.20.1-1.0.0")
+    runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:1.20.1-1.0.0:javadoc")
+    //implementation fg.deobf("curse.maven:worldedit-225608:3922622")
     //implementation fg.deobf('curse.maven:smallships-450659:4575301')
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -131,7 +132,7 @@ jar.finalizedBy('reobfJar')
 shadowJar {
     project.configurations.shadow.setTransitive(true);
     configurations = [project.configurations.shadow]
-    classifier = ""
+    //classifier = ""
     relocate 'de.maxhenkel.corelib', "de.maxhenkel.workers.corelib"
 }
 

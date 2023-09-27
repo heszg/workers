@@ -3,10 +3,7 @@ package com.talhanation.workers.entities.ai;
 import com.talhanation.workers.entities.SwineherdEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.EnumSet;
@@ -105,7 +102,7 @@ public class SwineherdAI extends AnimalFarmerAI {
 
     }
     private Optional<Pig> findPigBreeding() {
-        return  this.animalFarmer.level.getEntitiesOfClass(Pig.class, this.animalFarmer.getBoundingBox()
+        return  this.animalFarmer.getCommandSenderWorld().getEntitiesOfClass(Pig.class, this.animalFarmer.getBoundingBox()
                 .inflate(8D), Pig::isAlive)
                 .stream()
                 .filter(not(Pig::isBaby))
@@ -113,7 +110,7 @@ public class SwineherdAI extends AnimalFarmerAI {
                 .findAny();
     }
     private List<Pig> findPigSlaughtering() {
-        return this.animalFarmer.level.getEntitiesOfClass(Pig.class, this.animalFarmer.getBoundingBox()
+        return this.animalFarmer.getCommandSenderWorld().getEntitiesOfClass(Pig.class, this.animalFarmer.getBoundingBox()
                         .inflate(8D), Pig::isAlive)
                 .stream()
                 .filter(not(Pig::isBaby))

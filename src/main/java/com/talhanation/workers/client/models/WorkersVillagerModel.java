@@ -2,7 +2,6 @@ package com.talhanation.workers.client.models;
 
 import com.google.common.collect.ImmutableList;
 import com.talhanation.workers.entities.AbstractInventoryEntity;
-import com.talhanation.workers.entities.AbstractWorkerEntity;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

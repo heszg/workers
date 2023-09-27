@@ -20,9 +20,11 @@ import com.talhanation.workers.init.ModProfessions;
 import com.talhanation.workers.init.ModShortcuts;
 
 import de.maxhenkel.corelib.CommonRegistry;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -43,13 +45,17 @@ public class Main {
         WorkersModConfig.loadConfig(WorkersModConfig.CONFIG, FMLPaths.CONFIGDIR.get().resolve("workers-common.toml"));
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        
         modEventBus.addListener(this::setup);
         ModBlocks.BLOCKS.register(modEventBus);
         ModPois.POIS.register(modEventBus);
         ModProfessions.PROFESSIONS.register(modEventBus);
         ModMenuTypes.MENU_TYPES.register(modEventBus);
         // ModSounds.SOUNDS.register(modEventBus);
+
         ModItems.ITEMS.register(modEventBus);
+        modEventBus.addListener(this::addCreativeTab);
+
         ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
@@ -113,4 +119,20 @@ public class Main {
         event.enqueueWork(ModMenuTypes::registerMenus);
         MinecraftForge.EVENT_BUS.register(new KeyEvents());
     }
+
+
+    public void addCreativeTab(BuildCreativeModeTabContentsEvent event)
+    {
+        
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) 
+        {
+            ModItems.SPAWN_EGGS.forEach( item -> event.accept(item) ); 
+        }
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
+        {
+            // ModItems.TOOLBOXES.forEach( item -> event.accept(item) ); 
+        }
+
+    }
+
 }

@@ -165,13 +165,13 @@ public class ChickenFarmerAI extends AnimalFarmerAI {
     }
 
     private Optional<Chicken> findChickenBreeding() {
-        return animalFarmer.level
+        return animalFarmer.getCommandSenderWorld()
                 .getEntitiesOfClass(Chicken.class, animalFarmer.getBoundingBox().inflate(8D), Chicken::isAlive)
                 .stream().filter(not(Chicken::isBaby)).filter(not(Chicken::isInLove)).findAny();
     }
 
     private List<Chicken> findChickenSlaughtering() {
-        return animalFarmer.level
+        return animalFarmer.getCommandSenderWorld()
                 .getEntitiesOfClass(Chicken.class, animalFarmer.getBoundingBox().inflate(8D), Chicken::isAlive)
                 .stream().filter(not(Chicken::isBaby)).filter(not(Chicken::isInLove)).collect(Collectors.toList());
     }

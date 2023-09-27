@@ -29,20 +29,20 @@ public abstract class AbstractHorseMixin extends Animal {
         }
     }
 
-    @SuppressWarnings("DataFlowIssue")
-    @Inject(method = "travel", at = @At(value = "HEAD", target = "Lnet/minecraft/world/entity/animal/horse/AbstractHorse;travel(Lnet/minecraft/world/phys/Vec3;)V"), cancellable = true)
-    private void superTravelWhenWorkerRides(Vec3 vec3, CallbackInfo ci) {
-        if (this.isAlive() && isVehicle() && getControllingPassenger() instanceof MerchantEntity) {
-            super.travel(vec3);
-            ci.cancel();
-        }
-    }
+//    @SuppressWarnings("DataFlowIssue")
+//    @Inject(method = "travel", at = @At(value = "HEAD", target = "Lnet/minecraft/world/entity/animal/horse/AbstractHorse;travel(Lnet/minecraft/world/phys/Vec3;)V"))
+//    private void superTravelWhenWorkerRides(Vec3 vec3, CallbackInfo ci) {
+//        if (this.isAlive() && isVehicle() && getControllingPassenger() instanceof MerchantEntity) {
+//            super.travel(vec3);
+//            ci.cancel();
+//        }
+//    }
 
     @SuppressWarnings("DataFlowIssue")
     @Inject(method = "positionRider", at = @At(value = "HEAD", target = "Lnet/minecraft/world/entity/Entity;positionRider(Lnet/minecraft/world/entity/Entity;)V"), cancellable = true)
-    private void superPositionRiderWhenWorkerRides(Entity entity, CallbackInfo ci) {
+    private void superPositionRiderWhenWorkerRides(Entity entity, MoveFunction moveFunction, CallbackInfo ci) {
         if (this.isAlive() && isVehicle() && getControllingPassenger() instanceof MerchantEntity) {
-            super.positionRider(entity);
+            super.positionRider(entity, moveFunction);
             ci.cancel();
         }
     }

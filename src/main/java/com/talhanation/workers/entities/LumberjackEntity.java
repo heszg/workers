@@ -5,7 +5,6 @@ import com.talhanation.workers.config.WorkersModConfig;
 import com.talhanation.workers.inventory.WorkerInventoryContainer;
 import com.talhanation.workers.entities.ai.*;
 import com.talhanation.workers.network.MessageOpenGuiWorker;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -34,17 +33,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.GolemRandomStrollInVillageGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MoveBackToVillageGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import org.jetbrains.annotations.NotNull;
 
 public class LumberjackEntity extends AbstractWorkerEntity {
@@ -204,7 +197,6 @@ public class LumberjackEntity extends AbstractWorkerEntity {
         IDLE(0),
         CALC_WORK_POS(1),
         WORKING(2),
-        STOPPING(3),
         DEPOSIT(7),
         UPKEEP(8),
 
