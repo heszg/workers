@@ -700,7 +700,10 @@ public class MerchantEntity extends AbstractWorkerEntity implements IBoatControl
     }
 
     public boolean isWaterBlockPos(BlockPos pos){
-        for(int i = 0; i < 3; i++){
+        if ( pos == null ) {
+            return false;
+        }
+        for(int i = 0; i < 3; i++) {
             BlockPos pos1 = pos.below(i);
             BlockPos pos2 = pos.above(i);
             BlockState state1 = this.getCommandSenderWorld().getBlockState(pos1);
@@ -728,7 +731,11 @@ public class MerchantEntity extends AbstractWorkerEntity implements IBoatControl
 
     public float getPrecisionMin(){
         int base = 50;
-        if(this.getVehicle().getEncodeId().contains("smallships")){
+        Entity vehicle = this.getVehicle();
+        if ( vehicle == null )
+            return base;
+        String name = vehicle.getEncodeId();
+        if( name != null && name.contains("smallships")){
             base = 100;
         }
         return base;
@@ -736,7 +743,11 @@ public class MerchantEntity extends AbstractWorkerEntity implements IBoatControl
 
     public float getPrecisionMax(){
         int base = 150;
-        if(this.getVehicle().getEncodeId().contains("smallships")){
+        Entity vehicle = this.getVehicle();
+        if ( vehicle == null )
+            return base;
+        String name = vehicle.getEncodeId();
+        if(name != null && name.contains("smallships")){
             base = 200;
         }
 

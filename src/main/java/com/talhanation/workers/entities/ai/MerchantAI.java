@@ -252,14 +252,20 @@ public class MerchantAI extends Goal {
         }
     }
     private void changeTravelType(){
-        if(merchant.getCurrentWayPoint() != null && merchant.isWaterBlockPos(merchant.getCurrentWayPoint())){
+        BlockPos waypoint = merchant.getCurrentWayPoint();
+        if ( waypoint == null )
+        {
+            return;
+        }
+        if( merchant.isWaterBlockPos(waypoint) ){
             if(boat != null && boat.getFirstPassenger() != null && this.merchant.equals(boat.getFirstPassenger())){
                 this.setWorkState(SAILING);
-            }
-            else
+            } else {
                 this.setWorkState(MOVE_TO_BOAT);
+            }
         }
-        else if (state != ARRIVED && state != HOME)
+        else if (state != ARRIVED && state != HOME) {
             this.setWorkState(TRAVELING_GROUND);
+        }
     }
 }
