@@ -8,6 +8,7 @@ import com.talhanation.workers.network.*;
 import de.maxhenkel.corelib.inventory.ScreenBase;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -227,12 +228,14 @@ public class MerchantWaypointScreen extends ScreenBase<MerchantWaypointContainer
 
                 String coordinates = String.format("%d:  (%d,  %d,  %d)", i + 1, x, y, z);
 
-                if(!waypointItems.isEmpty() && waypointItems.get(i) != null) renderItemAt(waypointItems.get(i), 15, 58 + ((i - startIndex) * 17)); // Adjust the Y position here
-                else{
+                if(!waypointItems.isEmpty() && waypointItems.get(i) != null) {
+                   renderItemAt( guiGraphics, waypointItems.get(i), 15, 58 + ((i - startIndex) * 17)); // Adjust the Y position here
+                } else {
                     BlockPos pos1 =  waypoints.get(i);
                     ItemStack itemStack = merchant.getItemStackToRender(pos1);
+                
 
-                    renderItemAt(itemStack, 15, 58 + ((i - startIndex) * 17));
+                   renderItemAt( guiGraphics, itemStack, 15, 58 + ((i - startIndex) * 17));
                 }
                 guiGraphics.drawString(font, coordinates, 35, 60 + ((i - startIndex) * 17), fontColor);
             }
@@ -245,12 +248,14 @@ public class MerchantWaypointScreen extends ScreenBase<MerchantWaypointContainer
 
     }
 
-    private void renderItemAt(ItemStack itemStack, int x, int y) {
+    private void renderItemAt( GuiGraphics guiGraphics, ItemStack itemStack, int x, int y) {
         if(itemStack != null) {
-            // TODO How to render an itemStack?
             // this.getMinecraft().getItemRenderer()  has no renderAndDecorateItem method
-
             // this.itemRenderer.renderAndDecorateItem(itemStack, x, y);
+
+            guiGraphics.renderItem(itemStack, x, y, 0);
+            Minecraft minecraft = Minecraft.getInstance();
+            guiGraphics.renderItemDecorations( minecraft.font, itemStack, x, y);
         }
     }
 
